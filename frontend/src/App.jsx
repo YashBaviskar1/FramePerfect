@@ -15,6 +15,7 @@ export default function App() {
   // A simple toggle to switch between preview and editing mode
   const [editingMode, setEditingMode] = useState(false);
   const [overlayText, setOverlayText] = useState(null);
+  const [keywords, setKeywords] = useState([]); // Add keywords state
   const handleAddAsset = (asset) => {
     if (asset.type === 'text') {
       setOverlays(prev => [...prev, {
@@ -46,7 +47,7 @@ export default function App() {
       
       <div className="flex flex-col flex-grow">
         <div className="flex">
-          <Media onAddAsset={handleAddAsset} />
+        <Media onAddAsset={handleAddAsset} keywords={keywords} />
           
           {editingMode ? (
             <CanvasEditor
@@ -61,7 +62,10 @@ export default function App() {
             />
           )}
           
-          <Transcription transcription={transcription} />
+          <Transcription 
+            transcription={transcription} 
+            setKeywords={setKeywords} // Pass setKeywords as prop
+          />
         </div>
 
         <Timeline videoFile={videoSrc} setCutVideoSrc={setCutVideoSrc} />
